@@ -15,10 +15,9 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-app.get("/", (res, req) => {
-    res.status(200).json("ready")
-})
-
+app.get('/', (req, res) => {
+    res.send('This is the backend root route.');
+});
 app.post('/send-waitlist-email', async (req, res) => {
     const { customerName, customerEmail, productName} = req.body;
 
