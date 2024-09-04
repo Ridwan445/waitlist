@@ -1,17 +1,20 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const connectDb = require('./db/db');
-const waitModel = require('./model/wait.model');
-require('dotenv').config();
+const waitModel = require('./model/wait.model')
+const dotenv = require("dotenv")
+dotenv.config()
+const cors = require("cors")
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 const transporter = nodemailer.createTransport({
     service: 'gmail', 
     auth: {
-        user: "getshortment@gmail.com",
-        pass: "zeia umna bgvd ksru",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
     },
 });
 
