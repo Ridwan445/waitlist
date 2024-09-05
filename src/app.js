@@ -28,14 +28,14 @@ app.post('/send-waitlist-email', async (req, res) => {
     await newCustomer.save();
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: "Shortment",
         to: customerEmail,
-        subject: `Waitlist Update for ${productName}`,
+        subject: `Waitlist Update for Shortment`,
         html: `
             <div style="font-family: Arial, sans-serif; color: #333;">
-                <h2 style="color: #0073e6;">Waitlist Update for ${productName}</h2>
-                <p>Dear ${customerName},</p>
-                <p>Thank you for your interest in ${productName}! We're excited to let you know that you've been added to our waitlist.</p>
+                <h2 style="color: #0073e6;">Waitlist Update for Shortment</h2>
+                <p>Hello</p>
+                <p>Thank you for your interest in shortment! We're excited to let you know that you've been added to our waitlist.</p>
                 <p>We're working hard to get everyone on board as soon as possible. You'll receive another email as soon as your spot is available.</p>
                 <p>In the meantime, if you have any questions or need further information, feel free to reach out to us at ${"getshortment@gmail.com"}.</p>
                 <p>Thank you for your patience and support!</p>

@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
 const waitSchema = new mongoose.Schema({
-  customerName: String,
-  productName: String,
-  customerEmail: String,
+  customerEmail: {
+    type: String,
+    required: true,
+    unique: true
+  }
 })
 const waitModel = mongoose.model("Wait", waitSchema)
 module.exports = waitModel
