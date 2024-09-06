@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const waitSchema = new mongoose.Schema({
-  customerEmail: {
+  email: {
     type: String,
     required: true,
     unique: true

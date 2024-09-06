@@ -21,36 +21,45 @@ const transporter = nodemailer.createTransport({
 app.get('/', (req, res) => {
     res.send('This is the backend root route.');
 });
+
 app.post('/send-waitlist-email', async (req, res) => {
-    const {  customerEmail} = req.body;
+const { email } = req.body;
 
-    const newCustomer = new waitModel({ customerEmail });
-    await newCustomer.save();
+try {
+const newCustomer = new waitModel({ email });
+await newCustomer.save();
 
-    const mailOptions = {
-        from: "Shortment",
-        to: customerEmail,
-        subject: `Waitlist Update for Shortment`,
-        html: `
-            <div style="font-family: Arial, sans-serif; color: #333;">
-                <h2 style="color: #0073e6;">Waitlist Update for Shortment</h2>
-                <p>Hello</p>
-                <p>Thank you for your interest in shortment! We're excited to let you know that you've been added to our waitlist.</p>
-                <p>We're working hard to get everyone on board as soon as possible. You'll receive another email as soon as your spot is available.</p>
-                <p>In the meantime, if you have any questions or need further information, feel free to reach out to us at ${"getshortment@gmail.com"}.</p>
-                <p>Thank you for your patience and support!</p>
-                <p>Best regards,</p>
-                <p>The Shortment Team</p>
-            </div>
-        `,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).json({ message: 'Failed to send email', error});
-        }
-        res.status(200).json({ message: 'Waitlist email sent successfully',});
+const mailOptions = {
+    from: "Shortment",
+    to: email,
+    subject: `Waitlist Update for Shortment`,
+    html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+            <h2 style="color: #0073e6;">Waitlist Update for Shortment</h2>
+            <p>Hello</p>
+            <p>Thank you for your interest in Shortment! You've been added to our waitlist.</p>
+            <p>We're working hard to get everyone on board. You'll receive an email when your spot is available.</p>
+            <p>If you have any questions, reach us at ${"getshortment@gmail.com"}.</p>
+            <p>Thank you for your patience and support!</p>
+            <p>Best regards,</p>
+            <p>The Shortment Team</p>
+        </div>
+    `,
+};
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return res.status(500).json({ 
+            message: 'Failed to send email', 
+            error: error.message 
+        });
+    }
+    res.status(200).json({ 
+        message: 'Waitlist email sent successfully', 
     });
+});
+} catch (err) {
+res.status(500).json({ message: 'Server error', error: err.message });
+}
 });
 
 const PORT = process.env.PORT || 3000;
