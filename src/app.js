@@ -22,9 +22,9 @@ app.get('/', (req, res) => {
     res.send('This is the backend root route.');
 });
 app.post('/send-waitlist-email', async (req, res) => {
-    const { customerName, customerEmail, productName} = req.body;
+    const {  customerEmail} = req.body;
 
-    const newCustomer = new waitModel({ customerName, customerEmail, productName });
+    const newCustomer = new waitModel({ customerEmail });
     await newCustomer.save();
 
     const mailOptions = {
@@ -49,7 +49,7 @@ app.post('/send-waitlist-email', async (req, res) => {
         if (error) {
             return res.status(500).json({ message: 'Failed to send email', error});
         }
-        res.status(200).json({ message: 'Waitlist email sent successfully', info });
+        res.status(200).json({ message: 'Waitlist email sent successfully',});
     });
 });
 
